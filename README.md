@@ -7,5 +7,4 @@ tell it to look for the profile in C:\Users. When it can't find the deleted prof
 profile folder and then deleting it so nothing is left behind.
 
 The PowerShell script is designed to be run on a schedule to keep up with the cleaning up of any users added. It can also be used in one off situations as well. While this has been designed for roaming profiles,
-I would imagine that it would work just fine for local profiles as well. Keeping in mind that any local profiles that are deleted are gone for good. <b>Use caution and use the SafeUsers varable</b> at the top of the sctipt to
-ensure safety.
+I would imagine that it would work just fine for local profiles as well. Keeping in mind that any local profiles that are deleted are gone for good. <b>Use caution and use the SafeUsers variable</b> at the top of the script to ensure safety.
