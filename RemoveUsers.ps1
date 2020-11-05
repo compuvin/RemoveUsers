@@ -1,6 +1,6 @@
 ##### - User changable variables
+param ($DaysBack = 365) #Delete profiles older than this many days. Can also provide the script with the parameter DaysBack.
 $SafeUsers = "Public", "Default", "Default.migrated", "juser" #User profiles to ignore
-$DaysBack = 365 #Delete profiles older than this many days
 #####
 
 $UsersToRemove = Get-ChildItem "C:\Users" |? {$_.psiscontainer -and $_.lastwritetime -le (get-date).adddays(-$DaysBack)}
