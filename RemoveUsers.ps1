@@ -4,7 +4,7 @@ $SafeUsers = "Public", "Default", "Default.migrated", "juser" #User profiles to 
 #####
 
 $UsersToRemove = Get-ChildItem "C:\Users" |? {$_.psiscontainer -and $_.lastwritetime -le (get-date).adddays(-$DaysBack)}
-$UsersFromReg = Get-ChildItem "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList"
+$UsersFromReg = Get-ChildItem "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ProfileList"  | Where-Object { (-not($_ -match 'S-1-5-18|S-1-5-19|S-1-5-20')) } #Users from registry, ignoring system accounts
 $Key = $UsersFromReg | Get-ItemProperty -name "ProfileImagePath"
 
 
