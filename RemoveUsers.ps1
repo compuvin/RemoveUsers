@@ -54,7 +54,7 @@ Get-EventLog -LogName "Security" -InstanceId 4624 -ErrorAction "SilentlyContinue
 
 foreach ($item in $UsersToRemove)
 {
-    if ($SafeUsers.Contains($item.Name) -eq 0)
+    if ($SafeUsers.Contains($item.Name) -eq 0 -and (($item.Name).Split("." + ($env:USERDNSDomain).Split(".")[0])[0]).Length -gt 0 -and $SafeUsers.Contains(($item.Name).Split("." + ($env:USERDNSDomain).Split(".")[0])[0]) -eq 0)
     { 
         $Key | ForEach-Object {
             If($_.ProfileImagePath.ToLower() -match $item.Name)
