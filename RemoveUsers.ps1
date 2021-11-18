@@ -49,7 +49,7 @@ Get-EventLog -LogName "Security" -InstanceId 4624 -ErrorAction "SilentlyContinue
             if (([DateTime]$EventMessage.TimeGenerated.ToString("yyyy-MM-dd")) -ge ([DateTime](get-date).adddays(-$DaysBack)))
             {
                 $SafeUsers += $AccountName
-                Write-Host $AccountName ' added to SafeUsers'
+                Write-Output $AccountName ' added to SafeUsers'
             }
 
         }
@@ -66,7 +66,7 @@ foreach ($item in $UsersToRemove)
         $Key | ForEach-Object {
             If($_.ProfileImagePath.ToLower() -match $item.Name)
             {
-                Write-Host $_.PSPath ' = ' $_.ProfileImagePath
+                Write-Output $_.PSPath ' = ' $_.ProfileImagePath
                 Remove-Item $_.PSPath -Recurse -Force
                 takeown /f $_.ProfileImagePath /a /r /d Y > null 2>&1
                 Remove-Item $_.ProfileImagePath -Recurse -Force
