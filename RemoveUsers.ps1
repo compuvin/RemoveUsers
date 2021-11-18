@@ -19,13 +19,9 @@ Get-EventLog -LogName "Security" -InstanceId 4624 -ErrorAction "SilentlyContinue
     $AccountName = $EventMessage.ReplacementStrings[5]
     $LogonType = $EventMessage.ReplacementStrings[8]
 
-    if ( $Lowercase ) {
-
-         # Make all usernames lowercase so they group properly in Inventory
-         $AccountName = $AccountName.ToLower()
-
-    }
-    
+    # Make all usernames lowercase so they group properly in Inventory
+    $AccountName = $AccountName.ToLower()
+        
     # Look for events that contain local or remote logon events, while ignoring Windows service accounts
     if ( ( $LogonType -in "2", "10" ) -and ( $AccountName -notmatch "^(DWM|UMFD)-\d" ) ) {
     
@@ -49,7 +45,7 @@ Get-EventLog -LogName "Security" -InstanceId 4624 -ErrorAction "SilentlyContinue
             if (([DateTime]$EventMessage.TimeGenerated.ToString("yyyy-MM-dd")) -ge ([DateTime](get-date).adddays(-$DaysBack)))
             {
                 $SafeUsers += $AccountName
-                Write-Output $AccountName ' added to SafeUsers'
+                Write-Output ($AccountName + ' added to SafeUsers')
             }
 
         }
@@ -66,7 +62,7 @@ foreach ($item in $UsersToRemove)
         $Key | ForEach-Object {
             If($_.ProfileImagePath.ToLower() -match $item.Name)
             {
-                Write-Output $_.PSPath ' = ' $_.ProfileImagePath
+                Write-Output ($_.PSPath + ' = ' + $_.ProfileImagePath)
                 Remove-Item $_.PSPath -Recurse -Force
                 takeown /f $_.ProfileImagePath /a /r /d Y > null 2>&1
                 Remove-Item $_.ProfileImagePath -Recurse -Force
